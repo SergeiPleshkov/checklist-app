@@ -1,6 +1,7 @@
 /* global Db */
-let db = new Db();
-let tasks;
+let db = new Db(),
+    tasks;
+const CB_DONE = 'task-done-checkbox';
 db.getItem('tasks').then(data => tasks = data || []);
 
 window.addEventListener('load', () => {
@@ -13,7 +14,7 @@ document.querySelector('#add-task').addEventListener('click', (ev) => {
 });
 
 document.addEventListener('change', (ev) => {
-    if (!ev.target.classList.contains('task-done-checkbox')) {
+    if (!ev.target.classList.contains(CB_DONE)) {
         return;
     }
     ev.target.parentNode.parentNode.classList.toggle('is-done');
@@ -25,7 +26,14 @@ document.addEventListener('change', (ev) => {
     db.setItem('tasks', tasks).then(() => {
         new CheckList().renderTable();
     });
+})
 
+document.addEventListener('change', (ev)=> {
+    
+    document.querySelectorAll('.is-done').forEach((el) => {
+        if (document.getElementById('show-done').checked) return;
+        el.style.display = 'none';
+    })
 })
 
 document.getElementById('show-done').addEventListener('change', (ev) => {
@@ -47,7 +55,7 @@ class CheckList {
                 data.map((item) => {
                     valueTable += `
             <div class="${item.done ? 'is-done' : ''} row ${item.priority === 'Важно' ? 'important' : ''}">
-              <div class="col1"><input type="checkbox" class="task-done-checkbox" ${item.done ? ' checked': ''}></div>
+              <div class="col1"><input type="checkbox" class="${CB_DONE}" ${item.done ? ' checked': ''}></div>
               <div class="col2">${item.name}</div>
               <div class="col3">${item.priority}</div>
             </div>
@@ -56,7 +64,7 @@ class CheckList {
                 divContent.innerHTML = `
           <div class="table">
             <div class="row">
-              <div class="task-done-checkbox-header col1">Сделано!</div>
+              <div class="${CB_DONE}-header col1">Сделано!</div>
               <div class="task-body-header col2">Задание</div>
               <div class="task-priority-header col3">Приоритет</div>
             </div>
@@ -64,6 +72,12 @@ class CheckList {
           </div>
         `;
             })
+
+        if (document.getElementById('show-done').style.checked) return;
+        document.querySelectorAll('.is-done').forEach((el) => {
+            debugger;
+            el.style.display = 'none';
+        })
     }
 
     addTask() {
