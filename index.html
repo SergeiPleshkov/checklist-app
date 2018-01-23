@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+      <form>
+        
+        <input type="text" id="task-name">
+        <select id="task-priority">
+          <option value="Важно">Важно</option>
+          <option value="Так себе важно">Так себе важно</option>
+          <option value="Можно забыть">Можно забыть</option>
+        </select>
+        <button id = "add-task">Добавить</button>
+        
+      </form>
+    <div>
+    <input type="checkbox" id="show-done" checked>Отображать выполненные задачи
+    </div>
+    
+    <div id="content" class="content"></div>
+    
+    <script src="storage.js" defer></script>
+    <script src="checkList.js" defer></script>
+  </body>
+</html>
