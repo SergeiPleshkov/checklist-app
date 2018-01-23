@@ -1,7 +1,7 @@
 /* global Db */
 let db = new Db();
 let tasks;
-db.getItem('tasks').then(data => tasks = data || []); 
+db.getItem('tasks').then(data => tasks = data || []);
 
 window.addEventListener('load', () => {
     new CheckList().renderTable();
@@ -13,17 +13,19 @@ document.querySelector('#add-task').addEventListener('click', (ev) => {
 });
 
 document.addEventListener('change', (ev) => {
-    if (ev.target.classList.contains('task-done-checkbox')) {
-        ev.target.parentNode.parentNode.classList.toggle('is-done');
-        tasks.find((el, i, arr) => {
-            if (el.name == ev.target.parentNode.nextElementSibling.innerHTML) {
-                el.done = !el.done;
-            }
-        });
-        db.setItem('tasks', tasks).then(() => {
-            new CheckList().renderTable();
-        });
+    if (!ev.target.classList.contains('task-done-checkbox')) {
+        return;
     }
+    ev.target.parentNode.parentNode.classList.toggle('is-done');
+    tasks.find((el, i, arr) => {
+        if (el.name == ev.target.parentNode.nextElementSibling.innerHTML) {
+            el.done = !el.done;
+        }
+    });
+    db.setItem('tasks', tasks).then(() => {
+        new CheckList().renderTable();
+    });
+
 })
 
 document.getElementById('show-done').addEventListener('change', (ev) => {
@@ -44,22 +46,22 @@ class CheckList {
                 let valueTable = '';
                 data.map((item) => {
                     valueTable += `
-            <tr class="${item.done ? 'is-done' : ''}">
-              <td><input type="checkbox" class="task-done-checkbox" ${item.done ? ' checked': ''}></td>
-              <td>${item.name}</td>
-              <td>${item.priority}</td>
-            </tr>
+            <div class="${item.done ? 'is-done' : ''} row ${item.priority === 'Важно' ? 'important' : ''}">
+              <div class="col1"><input type="checkbox" class="task-done-checkbox" ${item.done ? ' checked': ''}></div>
+              <div class="col2">${item.name}</div>
+              <div class="col3">${item.priority}</div>
+            </div>
           `
                 });
                 divContent.innerHTML = `
-          <table>
-            <tr>
-              <th class="task-done-checkbox-header">Сделано!</th>
-              <th class="task-body-header">Задание</th>
-              <th class="task-priority-header">Приоритет</th>
-            </tr>
+          <div class="table">
+            <div class="row">
+              <div class="task-done-checkbox-header col1">Сделано!</div>
+              <div class="task-body-header col2">Задание</div>
+              <div class="task-priority-header col3">Приоритет</div>
+            </div>
             ${valueTable}
-          </table>
+          </div>
         `;
             })
     }

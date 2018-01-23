@@ -1,6 +1,11 @@
 body {
     display: flex;
     flex-flow: column;
+    height: 100%;
+}
+
+body > div {
+    margin: 10px;
 }
 
 form {
@@ -11,37 +16,50 @@ form {
     border-radius: 30px;
 }
 
-.content {
-    display: block;
+[class*="header"] {
+    background: ivory;
+    font-weight: bold;
 }
 
-table,
-td,
-tr,
-tbody,
-th {
+.table {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+.row {
+    height: 25px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
     text-align: center;
     border: 1px solid silver;
     border-collapse: collapse;
 }
 
-th,
-th {
-    background: ivory;
-}
-
-table {
-    width: 100%;
-}
-
-tr:last-child {
-    width: 120px;
-}
-
-tr:first-child {
-    width: 30px;
-}
-
 .is-done {
     text-decoration: line-through;
+    color: grey !important;
+}
+
+[class*="col1"] {
+    width: 10%;
+}
+
+[class*="col2"] {
+    width: 70%;
+}
+
+[class*="col3"] {
+    width: 20%;
+}
+
+div {
+    text-align: center;
+}
+
+.important {
+    color: red;
+    font-weight: bold;
+
 }
