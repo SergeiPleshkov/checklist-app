@@ -75,7 +75,6 @@ class CheckList {
 
         if (document.getElementById('show-done').style.checked) return;
         document.querySelectorAll('.is-done').forEach((el) => {
-            debugger;
             el.style.display = 'none';
         })
     }
