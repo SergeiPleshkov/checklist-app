@@ -72,6 +72,7 @@ class CheckList {
           </div>
         `;
             })
+            .catch(r=> alert('Нет задач'));
 
         if (document.getElementById('show-done').style.checked) return;
         document.querySelectorAll('.is-done').forEach((el) => {
